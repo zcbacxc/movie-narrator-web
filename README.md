@@ -1,5 +1,11 @@
 # movie-narrator-web
 
+![Python](https://img.shields.io/badge/python-3.10%2B-blue)
+![License](https://img.shields.io/github/license/zcbacxc/movie-narrator-web)
+![CI](https://github.com/zcbacxc/movie-narrator-web/actions/workflows/ci.yml/badge.svg)
+![PyPI](https://img.shields.io/pypi/v/movie-narrator-web)
+![Downloads](https://img.shields.io/pypi/dm/movie-narrator-web)
+
 Web UI (FastAPI + React) for [movie-narrator](https://github.com/zcbacxc/movie-narrator).
 
 > **Versioning**: This package uses an **independent version line**,
@@ -68,3 +74,12 @@ by FastAPI in production mode.
 
 This package depends on `movie-narrator` exclusively through the public
 contract layer (`movie_narrator.contract`). No internal module imports.
+
+## Documentation
+
+- [Changelog](CHANGELOG.md)
+- [Contributing](CONTRIBUTING.md)
+
+## License
+
+Licensed under the [AGPL-3.0](LICENSE) License.
