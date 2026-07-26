@@ -60,13 +60,29 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ matrix.python-version }}-core
+          key: ${{ runner.os }}-pip-${{ matrix.python-version }}-core-v2
+
+      - name: Install core engine dependencies (from PyPI — pre-built wheels)
+        run: |
+          pip install \
+            "typer>=0.12.0" \
+            "openai>=1.0.0" \
+            "pydantic>=2.0.0" \
+            "pydantic-settings>=2.0.0" \
+            "python-dotenv>=1.0.0" \
+            "edge-tts>=7.0.0" \
+            "moviepy>=2.0,<3.0" \
+            "pillow>=11.0.0" \
+            "pydub>=0.25.0" \
+            "pyyaml>=6.0" \
+            "tqdm>=4.0.0" \
+            "audioop-lts>=0.2.0; python_version >= '3.13'"
 
       - name: Clone core engine (shallow)
         run: git clone --depth 1 https://github.com/zcbacxc/movie-narrator.git /tmp/core
 
-      - name: Install core engine
-        run: pip install /tmp/core
+      - name: Install core engine (skip dep resolution — deps already installed)
+        run: pip install --no-deps /tmp/core
 
       - name: Install web dependencies (runtime + dev)
         run: pip install "fastapi>=0.104.0" "uvicorn[standard]>=0.24.0" "python-multipart>=0.0.6" "pytest>=8.0"
