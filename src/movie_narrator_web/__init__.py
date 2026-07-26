@@ -2,6 +2,19 @@
 
 from __future__ import annotations
 
+# ── Contract version check ─────────────────────────────────
+# Fail fast if the installed core engine doesn't meet the
+# minimum contract version required by this web package.
+from movie_narrator.contract import CONTRACT_VERSION
+
+_MIN_CONTRACT = (0, 5, 0)
+if CONTRACT_VERSION < _MIN_CONTRACT:
+    raise ImportError(
+        f"movie-narrator-web requires contract version >= {_MIN_CONTRACT}, "
+        f"but the installed movie-narrator reports {CONTRACT_VERSION}. "
+        f"Please upgrade: pip install -U movie-narrator"
+    )
+
 __all__ = ["launch_web_api"]
 
 
