@@ -9,7 +9,7 @@ Thanks for your interest in contributing! This guide covers the development work
 ```bash
 git clone https://github.com/zcbacxc/movie-narrator-web.git
 cd movie-narrator-web
-pip install -e .
+pip install -e ".[dev]"
 ```
 
 The core engine is installed automatically as a dependency. For development against the latest core:
@@ -31,6 +31,12 @@ Build the SPA for packaging:
 
 ```bash
 npm run build  # outputs to src/movie_narrator_web/static/
+```
+
+Type-check the frontend (no emit):
+
+```bash
+npx tsc --noEmit
 ```
 
 ## Testing
