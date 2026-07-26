@@ -12,11 +12,30 @@ pip install movie-narrator-web
 This automatically pulls in `movie-narrator` (core engine) and all web
 dependencies (FastAPI, uvicorn).
 
+## Prerequisites
+
+- Python >= 3.10
+- ffmpeg (required by the core engine for audio/video processing)
+
 ## Usage
 
 ```bash
 mn-web --host 127.0.0.1 --port 8760
 ```
+
+For development with auto-reload:
+
+```bash
+mn-web --reload
+```
+
+### CLI Options
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `--host` | `127.0.0.1` | Bind address |
+| `--port` | `8760` | Port to listen on |
+| `--reload` | off | Enable auto-reload (development mode) |
 
 Or programmatically:
 
