@@ -1,0 +1,107 @@
+name: Publish to PyPI
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  id-token: write   # OIDC for trusted publishing
+  contents: write   # needed to create GitHub Release
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    outputs:
+      publish_target: ${{ steps.determine_target.outputs.target }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Determine publish target
+        id: determine_target
+        run: |
+          TAG="${GITHUB_REF#refs/tags/}"
+          if [[ "$TAG" == *"-test" ]]; then
+            echo "target=testpypi" >> "$GITHUB_OUTPUT"
+            echo "is_prerelease=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "target=pypi" >> "$GITHUB_OUTPUT"
+            echo "is_prerelease=false" >> "$GITHUB_OUTPUT"
+          fi
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: webui/package-lock.json
+
+      - name: Build frontend
+        working-directory: webui
+        run: |
+          npm ci
+          npm run build
+
+      - name: Verify frontend build output
+        run: |
+          test -f src/movie_narrator_web/static/index.html
+          test -n "$(ls src/movie_narrator_web/static/assets/*.js)"
+          test -n "$(ls src/movie_narrator_web/static/assets/*.css)"
+          echo "Frontend built successfully"
+
+      - name: Install build tools
+        run: pip install build twine
+
+      - name: Build package
+        run: python -m build
+
+      - name: Check distribution
+        run: twine check dist/*
+
+      - name: Verify wheel contains WebUI static assets
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile
+
+          wheels = sorted(Path("dist").glob("*.whl"), key=lambda p: p.stat().st_mtime)
+          assert wheels, "no wheel found in dist/"
+          wheel = wheels[-1]
+          with ZipFile(wheel) as zf:
+              names = [n.replace("\\", "/") for n in zf.namelist()]
+          required = "movie_narrator_web/static/index.html"
+          js = [n for n in names if n.startswith("movie_narrator_web/static/assets/") and n.endswith(".js")]
+          css = [n for n in names if n.startswith("movie_narrator_web/static/assets/") and n.endswith(".css")]
+          errors = []
+          if required not in names:
+              errors.append(f"missing {required}")
+          if not js:
+              errors.append("no static/assets/*.js in wheel")
+          if not css:
+              errors.append("no static/assets/*.css in wheel")
+          if errors:
+              print(f"Inspecting {wheel.name}; static-ish entries:")
+              for n in names:
+                  if "static" in n:
+                      print(" ", n)
+              raise SystemExit("FAIL: " + "; ".join(errors))
+          print(f"OK: {wheel.name} ships SPA ({len(js)} js, {len(css)} css)")
+          PY
+
+      - name: Publish to ${{ steps.determine_target.outputs.target }}
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: ${{ steps.determine_target.outputs.target == 'testpypi' && 'https://test.pypi.org/legacy/' || '' }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+          draft: false
+          prerelease: ${{ steps.determine_target.outputs.is_prerelease }}
