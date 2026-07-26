@@ -56,11 +56,14 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y ffmpeg fonts-noto-cjk
 
-      - name: Install core engine
+      - name: Install core engine (from GitHub)
         run: pip install git+https://github.com/zcbacxc/movie-narrator.git
 
-      - name: Install web package (development mode)
-        run: pip install -e ".[dev]"
+      - name: Install web package (skip dep resolution — core already installed)
+        run: pip install --no-deps -e .
+
+      - name: Install web dev dependency
+        run: pip install pytest
 
       - name: Run web package tests
         run: pytest tests/ -v
