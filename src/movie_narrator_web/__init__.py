@@ -15,13 +15,13 @@ if CONTRACT_VERSION < _MIN_CONTRACT:
         f"Please upgrade: pip install -U movie-narrator"
     )
 
-__all__ = ["launch_web_api"]
+__all__ = ["launch_web_api", "main"]
 
 
 def launch_web_api(host: str = "127.0.0.1", port: int = 8760, reload: bool = False) -> None:
     """Start the FastAPI web API server.
 
-    Imports are lazy so that ``mn web`` doesn't require fastapi/uvicorn
+    Imports are lazy so that ``mn-web`` doesn't require fastapi/uvicorn
     unless the user actually launches the web UI.
     """
     import uvicorn
@@ -30,3 +30,35 @@ def launch_web_api(host: str = "127.0.0.1", port: int = 8760, reload: bool = Fal
 
     app = create_app()
     uvicorn.run(app, host=host, port=port, reload=reload)
+
+
+def main() -> None:
+    """CLI entry point for ``mn-web`` command.
+
+    Parses ``--host``, ``--port``, and ``--reload`` arguments,
+    then delegates to :func:`launch_web_api`.
+    """
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        prog="mn-web",
+        description="Launch the Movie Narrator Web UI (FastAPI + React SPA).",
+    )
+    parser.add_argument(
+        "--host",
+        default="127.0.0.1",
+        help="Bind address (default: 127.0.0.1)",
+    )
+    parser.add_argument(
+        "--port",
+        type=int,
+        default=8760,
+        help="Port to listen on (default: 8760)",
+    )
+    parser.add_argument(
+        "--reload",
+        action="store_true",
+        help="Enable auto-reload (development mode)",
+    )
+    args = parser.parse_args()
+    launch_web_api(host=args.host, port=args.port, reload=args.reload)

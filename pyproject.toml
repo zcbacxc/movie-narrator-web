@@ -35,7 +35,7 @@ Repository = "https://github.com/zcbacxc/movie-narrator-web"
 Issues = "https://github.com/zcbacxc/movie-narrator-web/issues"
 
 [project.scripts]
-mn-web = "movie_narrator_web:launch_web_api"
+mn-web = "movie_narrator_web:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

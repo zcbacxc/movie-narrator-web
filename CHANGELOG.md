@@ -5,6 +5,11 @@ All notable changes to **movie-narrator-web** will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+- `mn-web` CLI entry point now properly parses `--host`, `--port`, and `--reload` arguments via argparse (previously called `launch_web_api` directly, which ignored all CLI flags)
+
 ## [0.5.0] — 2026-07-26
 
 ### Added
