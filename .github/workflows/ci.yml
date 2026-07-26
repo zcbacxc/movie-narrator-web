@@ -56,8 +56,17 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y ffmpeg fonts-noto-cjk
 
-      - name: Install core engine (from GitHub — PyPI may lag behind)
-        run: pip install git+https://github.com/zcbacxc/movie-narrator.git
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ matrix.python-version }}-core
+
+      - name: Clone core engine (shallow)
+        run: git clone --depth 1 https://github.com/zcbacxc/movie-narrator.git /tmp/core
+
+      - name: Install core engine
+        run: pip install /tmp/core
 
       - name: Install web dependencies (runtime + dev)
         run: pip install "fastapi>=0.104.0" "uvicorn[standard]>=0.24.0" "python-multipart>=0.0.6" "pytest>=8.0"
