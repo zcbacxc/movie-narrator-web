@@ -2,6 +2,11 @@
 
 Web UI (FastAPI + React) for [movie-narrator](https://github.com/zcbacxc/movie-narrator).
 
+> **Versioning**: This package uses an **independent version line** (starting at v1.0.0),
+> separate from the core engine (`movie-narrator`). Compatibility is guaranteed by the
+> `CONTRACT_VERSION` check at import time — you do not need to match version numbers
+> between the two packages.
+
 This is a separate package from the core engine. Install it only if you need
 the web interface:
 

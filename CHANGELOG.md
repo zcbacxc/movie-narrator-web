@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] — 2026-07-26
+
+### Changed
+- **Independent versioning** — movie-narrator-web now uses its own version line, separate from the core engine (`movie-narrator`). The package version no longer mirrors the core's version number.
+- Compatibility with the core engine is determined solely by `CONTRACT_VERSION` (checked at import time in `__init__.py`), not by comparing package version numbers.
+- Bumped from 0.5.0 → 1.0.0 to signal the start of the independent version line. No functional changes.
+
+### Why independent versioning?
+Previously, both packages shared the `0.5.x` version range, which created confusion — users might assume the web package was "behind" the core engine when version numbers differed. With independent versioning:
+- `movie-narrator-web` bumps on its own changes (UI, API routes, etc.)
+- `movie-narrator` (core) bumps on its own changes (pipeline, providers, etc.)
+- Compatibility is guaranteed by the `CONTRACT_VERSION` check, not version number matching
+
 ## [0.5.0] — 2026-07-26
 
 ### Added

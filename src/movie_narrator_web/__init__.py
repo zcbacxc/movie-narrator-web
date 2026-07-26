@@ -2,9 +2,15 @@
 
 from __future__ import annotations
 
+__version__ = "1.0.0"
+
 # ── Contract version check ─────────────────────────────────
 # Fail fast if the installed core engine doesn't meet the
 # minimum contract version required by this web package.
+#
+# NOTE: This checks the *contract* version (API compatibility),
+# not the package version. movie-narrator-web uses an independent
+# version line from the core engine — see README for details.
 from movie_narrator.contract import CONTRACT_VERSION
 
 _MIN_CONTRACT = (0, 5, 0)
