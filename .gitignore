@@ -31,8 +31,3 @@ src/movie_narrator_web/static/
 
 # TypeScript build info
 webui/tsconfig.tsbuildinfo
-
-# WebUI config files (excluded by default patterns, must re-include)
-!webui/package.json
-!webui/package-lock.json
-!webui/tsconfig.json
