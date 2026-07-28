@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.2] — 2026-07-28
+
+### Fixed
+
+- **Contract boundary violation in tests** (`tests/test_controller.py`): changed `from movie_narrator.pipeline.errors import PipelineCancelled, check_cancelled` to `from movie_narrator.contract import PipelineCancelled, check_cancelled`. The test was the only file in the web package that bypassed the contract layer and imported from an internal core module, violating the "no internal module imports" rule declared in README and CHANGELOG.
+
+### Changed
+
+- **Use contract `check_version()` helper** (`__init__.py`): replaced hand-written version comparison logic with the `check_version()` helper function exported from `movie_narrator.contract`. This eliminates duplicate implementation and uses the canonical version-check utility provided by the core engine.
+
+### Notes
+
+- `CONTRACT_VERSION` requirement unchanged — still `(0, 5, 0)`.
+- All 64 web tests pass (0 failures).
+
 ## [1.0.1] — 2026-07-26
 
 ### Initial release
