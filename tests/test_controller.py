@@ -12,7 +12,7 @@ import time
 
 import pytest
 
-from movie_narrator.pipeline.errors import PipelineCancelled, check_cancelled
+from movie_narrator.contract import PipelineCancelled, check_cancelled
 from movie_narrator_web.controller import TaskController
 
 
