@@ -98,10 +98,32 @@ jobs:
         with:
           repository-url: ${{ steps.determine_target.outputs.target == 'testpypi' && 'https://test.pypi.org/legacy/' || '' }}
 
+      - name: Generate release notes from CHANGELOG
+        id: notes
+        run: |
+          TAG_VERSION="${{ steps.determine_target.outputs.tag }}"
+          python3 -c "
+          import re
+          with open('CHANGELOG.md') as f:
+              content = f.read()
+          ver = '${TAG_VERSION}'.replace('-test', '')
+          pattern = r'## \[' + re.escape(ver) + r'\](.*?)(?=\n## \[|\Z)'
+          m = re.search(pattern, content, re.DOTALL)
+          if m:
+              lines = m.group(1).strip().split('\n', 1)
+              body = lines[1] if len(lines) > 1 else lines[0]
+              with open('/tmp/release_notes.md', 'w') as out:
+                  out.write(body.strip() + '\n')
+          else:
+              with open('/tmp/release_notes.md', 'w') as out:
+                  out.write('Release ${TAG_VERSION}\n')
+          "
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.ref_name }}
           name: ${{ github.ref_name }}
+          body_path: /tmp/release_notes.md
           draft: false
           prerelease: ${{ steps.determine_target.outputs.is_prerelease }}

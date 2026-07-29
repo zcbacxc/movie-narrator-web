@@ -1,0 +1,14 @@
+# Default owner — all files not explicitly listed
+* @zcbacxc
+
+# Frontend (React + Vite)
+/webui/ @zcbacxc
+
+# FastAPI backend
+/src/movie_narrator_web/ @zcbacxc
+
+# Contract layer (sole API boundary)
+/src/movie_narrator_web/contract.py @zcbacxc
+
+# CI/CD workflows
+/.github/workflows/ @zcbacxc
