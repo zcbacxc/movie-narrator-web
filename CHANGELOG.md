@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.3] — 2026-07-30
+
+### Changed
+
+- **Licensing standardization**: updated `pyproject.toml` to PEP 639 string format (`license = "AGPL-3.0-or-later"`) with `setuptools>=77.0` build requirement, replacing the deprecated PEP 621 table format and `AGPL-3.0` identifier.
+- **SPDX headers**: added `SPDX-FileCopyrightText` and `SPDX-License-Identifier: AGPL-3.0-or-later` headers to all 11 source files under `src/movie_narrator_web/`.
+- **README**: updated license reference from `AGPL-3.0` to `AGPL-3.0-or-later`.
+
+### Notes
+
+- Aligns with core engine (`movie-narrator` v0.6.1) licensing conventions.
+- `CONTRACT_VERSION` requirement unchanged — still `(0, 5, 0)`.
+
 ## [1.0.2] — 2026-07-28
 
 ### Fixed

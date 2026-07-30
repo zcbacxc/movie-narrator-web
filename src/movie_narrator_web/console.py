@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 zcbacxc
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 """WebSocketConsole — buffered console for WebSocket UI consumption.
 
 Thread-safe: pipeline thread writes lines, WS endpoint polls snapshot().

@@ -82,4 +82,4 @@ contract layer (`movie_narrator.contract`). No internal module imports.
 
 ## License
 
-Licensed under the [AGPL-3.0](LICENSE) License.
+Licensed under the [AGPL-3.0-or-later](LICENSE) License.

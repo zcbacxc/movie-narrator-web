@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 zcbacxc
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 """Form data model, validation, and conversion to build_context kwargs.
 
 The ``empty = no override`` rule (§5.3 of the spec) is critical:

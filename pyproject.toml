@@ -1,13 +1,13 @@
 [build-system]
-requires = ["setuptools>=61.0", "wheel"]
+requires = ["setuptools>=77.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "movie-narrator-web"
-version = "1.0.2"
+version = "1.0.3"
 description = "Web UI (FastAPI + React) for movie-narrator — install separately from the core engine."
 readme = "README.md"
-license = {text = "AGPL-3.0"}
+license = "AGPL-3.0-or-later"
 authors = [
     {name = "zcbacxc", email = "zcbacxc@users.noreply.github.com"}
 ]

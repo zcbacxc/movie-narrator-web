@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 zcbacxc
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 """Cooperative cancel controller for the Web API.
 
 Identical pattern to GradioController: threading.Event for cross-thread

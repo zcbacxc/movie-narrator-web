@@ -1,8 +1,11 @@
+# SPDX-FileCopyrightText: 2026 zcbacxc
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 """Web API — FastAPI + WebSocket backend for the React WebUI."""
 
 from __future__ import annotations
 
-__version__ = "1.0.2"
+__version__ = "1.0.3"
 
 # ── Contract version check ─────────────────────────────────
 # Fail fast if the installed core engine doesn't meet the

@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 zcbacxc
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 """TaskManager — create/query/cancel pipeline tasks.
 
 Single-task at a time (ThreadPoolExecutor max_workers=1). Each task
