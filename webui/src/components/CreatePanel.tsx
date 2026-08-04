@@ -10,9 +10,11 @@ import { AssetsSection } from "@/components/AssetsSection"
 import { SubtitlesSection } from "@/components/SubtitlesSection"
 import { AdvancedSection } from "@/components/AdvancedSection"
 import { useTask } from "@/hooks/useTask"
+import { useI18n } from "@/i18n"
 import type { FormSubmitData } from "@/types"
 
 export function CreatePanel() {
+  const { t } = useI18n()
   const { startTask, formData, setFormData } = useTask()
   const [videoFile, setVideoFile] = useState<File | null>(null)
   const [bgmFile, setBgmFile] = useState<File | null>(null)
@@ -30,7 +32,7 @@ export function CreatePanel() {
     try {
       await startTask(formData, videoFile ?? undefined, bgmFile ?? undefined)
     } catch (err) {
-      setSubmitError(err instanceof Error ? err.message : "创建任务失败")
+      setSubmitError(err instanceof Error ? err.message : t("create.submitError"))
     } finally {
       setSubmitting(false)
     }
@@ -42,9 +44,9 @@ export function CreatePanel() {
     <div className="mx-auto max-w-2xl px-4 py-8">
       <Card>
         <CardHeader>
-          <CardTitle>创建解说任务</CardTitle>
+          <CardTitle>{t("create.title")}</CardTitle>
           <CardDescription>
-            填写电影信息和解说参数，一键生成电影解说视频
+            {t("create.description")}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -100,12 +102,12 @@ export function CreatePanel() {
             {submitting ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" strokeWidth={1.5} />
-                正在创建任务...
+                {t("create.submitting")}
               </>
             ) : (
               <>
                 <Sparkles className="mr-2 h-4 w-4" strokeWidth={1.5} />
-                生成解说视频
+                {t("create.submit")}
               </>
             )}
           </Button>

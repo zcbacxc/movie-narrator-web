@@ -2,25 +2,8 @@ import type { ReactNode } from "react"
 import { Check, X, Loader2, Minus } from "lucide-react"
 import { Progress } from "@/components/ui/progress"
 import { PIPELINE_STEPS } from "@/types"
+import { useI18n } from "@/i18n"
 import { cn } from "@/lib/utils"
-
-const STEP_LABELS: Record<string, string> = {
-  resolve_video: "解析视频",
-  prepare_assets: "准备素材",
-  research_plot: "剧情研究",
-  generate_script: "生成文案",
-  export_script_md: "导出文案",
-  generate_voice: "语音合成",
-  align_audio: "音频对齐",
-  detect_scenes: "场景检测",
-  match_clips: "片段匹配",
-  mix_bgm: "混音配乐",
-  translate_subtitles: "翻译字幕",
-  generate_subtitle: "生成字幕",
-  render_video: "渲染输出",
-  validate_deliverable: "成片质检",
-  export_clips: "导出片段",
-}
 
 type StepState = "pending" | "active" | "done" | "failed" | "skipped"
 
@@ -92,6 +75,7 @@ interface ProgressTimelineProps {
 }
 
 export function ProgressTimeline({ currentStep, status }: ProgressTimelineProps) {
+  const { t } = useI18n()
   const states = getStepStates(currentStep, status)
   const percent = getProgressPercent(states)
 
@@ -100,7 +84,7 @@ export function ProgressTimeline({ currentStep, status }: ProgressTimelineProps)
       {/* Progress bar */}
       <div className="space-y-1.5">
         <div className="flex items-center justify-between text-sm">
-          <span className="font-medium text-slate-200">流水线进度</span>
+          <span className="font-medium text-slate-200">{t("progress.title")}</span>
           <span className="font-mono text-pink-400">{percent}%</span>
         </div>
         <Progress value={percent} />
@@ -134,7 +118,7 @@ export function ProgressTimeline({ currentStep, status }: ProgressTimelineProps)
                   style.label
                 )}
               >
-                {STEP_LABELS[step] ?? step}
+                {t(`step.${step}`)}
               </span>
             </div>
           )

@@ -16,6 +16,7 @@ export interface FormSubmitData {
   match_min_score?: number;
   translate_provider: string;
   translate_retries?: number;
+  lang: "zh" | "en";
 }
 
 export type TaskStatus = "running" | "done" | "failed" | "cancelled";

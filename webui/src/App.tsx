@@ -10,6 +10,7 @@ import { Footer } from "@/components/Footer"
 import { CreatePanel } from "@/components/CreatePanel"
 import { MonitorPanel } from "@/components/MonitorPanel"
 import { useWebSocket } from "@/hooks/useWebSocket"
+import { useI18n } from "@/i18n"
 import { createTask, cancelTask as cancelTaskApi } from "@/lib/api"
 import type { FormSubmitData, TaskStatus, WsMessage } from "@/types"
 
@@ -30,6 +31,7 @@ const DEFAULT_FORM: FormSubmitData = {
   subtitle_mode: "original",
   narration_preset: "",
   translate_provider: "",
+  lang: "zh",
 }
 
 export interface TaskContextValue {
@@ -51,6 +53,7 @@ export interface TaskContextValue {
 export const TaskContext = createContext<TaskContextValue | null>(null)
 
 export function App() {
+  const { lang } = useI18n()
   const [status, setStatus] = useState<AppStatus>("idle")
   const [taskId, setTaskId] = useState<string | null>(null)
   const [currentStep, setCurrentStep] = useState("")
@@ -87,7 +90,9 @@ export function App() {
     async (data: FormSubmitData, video?: File, bgm?: File) => {
       // Persist form data so "New Run" preserves user input
       setFormData(data)
-      const res = await createTask(data, video, bgm)
+      // Tag the task with the current UI language so the backend can
+      // pass it downstream to the pipeline.
+      const res = await createTask({ ...data, lang }, video, bgm)
       setTaskId(res.task_id)
       setStatus("running")
       setCurrentStep("")
@@ -96,7 +101,7 @@ export function App() {
       setError(null)
       setVideoPath(null)
     },
-    [],
+    [lang],
   )
 
   const resetTask = useCallback(() => {

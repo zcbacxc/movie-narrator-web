@@ -70,6 +70,14 @@ npm run build
 The build output lands in `src/movie_narrator_web/static/` and is served
 by FastAPI in production mode.
 
+## Internationalization
+
+The Web UI is bilingual (Chinese / English). A language switcher in the header
+lets you toggle between the two; the default follows your browser language and
+your choice is remembered in `localStorage`. The selected language is also sent
+to the backend as a `lang` (`zh` | `en`) form field and passed downstream to the
+pipeline, so narration can be generated in the active language.
+
 ## Architecture
 
 This package depends on `movie-narrator` exclusively through the public
