@@ -28,6 +28,7 @@ def _base_form(**overrides) -> FormData:
         match_min_score=None,
         translate_provider="",
         translate_retries=None,
+        lang="zh",
     )
     defaults.update(overrides)
     return FormData(**defaults)
@@ -80,6 +81,18 @@ class TestValidateForm:
     def test_translate_retries_out_of_range(self):
         errors = validate_form(_base_form(translate_retries=20))
         assert any("Translate retries" in e for e in errors)
+
+    def test_lang_zh_ok(self):
+        errors = validate_form(_base_form(lang="zh"))
+        assert errors == []
+
+    def test_lang_en_ok(self):
+        errors = validate_form(_base_form(lang="en"))
+        assert errors == []
+
+    def test_lang_invalid(self):
+        errors = validate_form(_base_form(lang="fr"))
+        assert any("Language" in e for e in errors)
 
 
 class TestFormToContextArgs:
@@ -138,3 +151,11 @@ class TestFormToContextArgs:
         """Web UI doesn't use YAML config files."""
         args = form_to_context_args(_base_form())
         assert args["config_path"] is None
+
+    def test_lang_default_zh(self):
+        args = form_to_context_args(_base_form())
+        assert args["lang"] == "zh"
+
+    def test_lang_propagated(self):
+        args = form_to_context_args(_base_form(lang="en"))
+        assert args["lang"] == "en"

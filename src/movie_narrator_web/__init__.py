@@ -5,7 +5,7 @@
 
 from __future__ import annotations
 
-__version__ = "1.0.3"
+__version__ = "1.0.4"
 
 # ── Contract version check ─────────────────────────────────
 # Fail fast if the installed core engine doesn't meet the

@@ -2,6 +2,7 @@ import { Clapperboard, Palette, Clock, Monitor } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Slider } from "@/components/ui/slider"
+import { useI18n } from "@/i18n"
 import type { FormSubmitData } from "@/types"
 
 interface MovieSectionProps {
@@ -10,18 +11,19 @@ interface MovieSectionProps {
 }
 
 export function MovieSection({ data, onChange }: MovieSectionProps) {
+  const { t } = useI18n()
   return (
     <div className="space-y-5">
       {/* Movie name */}
       <div className="space-y-2">
         <Label className="flex items-center gap-1.5 text-slate-200">
           <Clapperboard className="h-4 w-4 text-pink-500" strokeWidth={1.5} />
-          电影名称 <span className="text-pink-500">*</span>
+          {t("movie.name")} <span className="text-pink-500">*</span>
         </Label>
         <Input
           value={data.movie}
           onChange={(e) => onChange("movie", e.target.value)}
-          placeholder="输入电影名称，如：肖申克的救赎"
+          placeholder={t("movie.name.placeholder")}
           className="h-12 text-base"
         />
       </div>
@@ -30,12 +32,12 @@ export function MovieSection({ data, onChange }: MovieSectionProps) {
       <div className="space-y-2">
         <Label className="flex items-center gap-1.5 text-slate-200">
           <Palette className="h-4 w-4 text-pink-500" strokeWidth={1.5} />
-          解说风格
+          {t("movie.style")}
         </Label>
         <Input
           value={data.style}
           onChange={(e) => onChange("style", e.target.value)}
-          placeholder="热血搞笑"
+          placeholder={t("movie.style.placeholder")}
         />
       </div>
 
@@ -44,7 +46,7 @@ export function MovieSection({ data, onChange }: MovieSectionProps) {
         <div className="flex items-center justify-between">
           <Label className="flex items-center gap-1.5 text-slate-200">
             <Clock className="h-4 w-4 text-pink-500" strokeWidth={1.5} />
-            目标时长
+            {t("movie.duration")}
           </Label>
           <span className="text-sm font-medium text-pink-400">
             {Math.floor(data.duration / 60)}:{String(data.duration % 60).padStart(2, "0")}
@@ -67,7 +69,7 @@ export function MovieSection({ data, onChange }: MovieSectionProps) {
       <div className="space-y-2">
         <Label className="flex items-center gap-1.5 text-slate-200">
           <Monitor className="h-4 w-4 text-pink-500" strokeWidth={1.5} />
-          视频比例
+          {t("movie.format")}
         </Label>
         <div className="flex gap-2">
           {(["16:9", "9:16"] as const).map((fmt) => (
@@ -82,7 +84,7 @@ export function MovieSection({ data, onChange }: MovieSectionProps) {
               }`}
             >
               <span className="font-mono">{fmt}</span>
-              {fmt === "16:9" ? "横屏" : "竖屏"}
+              {fmt === "16:9" ? t("movie.format.horizontal") : t("movie.format.vertical")}
             </button>
           ))}
         </div>

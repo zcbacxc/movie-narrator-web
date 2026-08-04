@@ -1,11 +1,13 @@
 import { useEffect, useRef } from "react"
 import { Terminal } from "lucide-react"
+import { useI18n } from "@/i18n"
 
 interface LogStreamProps {
   logText: string
 }
 
 export function LogStream({ logText }: LogStreamProps) {
+  const { t } = useI18n()
   const containerRef = useRef<HTMLDivElement>(null)
   const preRef = useRef<HTMLPreElement>(null)
 
@@ -20,7 +22,7 @@ export function LogStream({ logText }: LogStreamProps) {
     <div ref={containerRef} className="flex h-full flex-col">
       <div className="flex items-center gap-2 border-b border-border px-4 py-2">
         <Terminal className="h-4 w-4 text-pink-500" strokeWidth={1.5} />
-        <span className="text-sm font-medium text-slate-200">实时日志</span>
+        <span className="text-sm font-medium text-slate-200">{t("log.title")}</span>
       </div>
       <pre
         ref={preRef}
@@ -28,7 +30,7 @@ export function LogStream({ logText }: LogStreamProps) {
         style={{ minHeight: "200px", maxHeight: "400px" }}
       >
         {logText || (
-          <span className="text-slate-500">等待日志输出...</span>
+          <span className="text-slate-500">{t("log.waiting")}</span>
         )}
       </pre>
     </div>

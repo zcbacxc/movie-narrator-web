@@ -9,9 +9,11 @@ import {
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { useTask } from "@/hooks/useTask"
+import { useI18n } from "@/i18n"
 import { getArtifactUrl, getVideoUrl } from "@/lib/api"
 
 export function ResultPanel() {
+  const { t } = useI18n()
   const { taskId, status, artifacts, error, resetTask } = useTask()
 
   if (!taskId) return null
@@ -26,7 +28,7 @@ export function ResultPanel() {
       <div className="space-y-4">
         <div className="flex items-center gap-2 text-green-400">
           <CheckCircle2 className="h-5 w-5" strokeWidth={1.5} />
-          <span className="text-lg font-semibold">任务完成</span>
+          <span className="text-lg font-semibold">{t("result.done")}</span>
         </div>
 
         {/* Video player */}
@@ -36,26 +38,26 @@ export function ResultPanel() {
             className="mx-auto max-h-[480px] w-full"
             src={videoUrl}
           >
-            您的浏览器不支持视频播放。
+            {t("result.videoUnsupported")}
           </video>
         </div>
 
         {/* Artifacts download */}
         {hasArtifacts && (
           <div className="space-y-2">
-            <h3 className="text-sm font-medium text-slate-200">下载制品</h3>
+            <h3 className="text-sm font-medium text-slate-200">{t("result.downloadArtifacts")}</h3>
             <div className="flex flex-wrap gap-2">
               <Button variant="outline" size="sm" asChild>
                 <a href={artifactUrl} download>
                   <Download className="mr-1.5 h-4 w-4" strokeWidth={1.5} />
-                  下载全部制品 ({artifacts!.length} 个文件)
+                  {t("result.downloadAll", { count: artifacts!.length })}
                 </a>
               </Button>
               {artifacts!.map((path, idx) => (
                 <Button key={idx} variant="ghost" size="sm" asChild>
                   <a href={artifactUrl} download>
                     <FileArchive className="mr-1.5 h-4 w-4" strokeWidth={1.5} />
-                    {path.split(/[\\/]/).pop() || `制品 ${idx + 1}`}
+                    {path.split(/[\\/]/).pop() || t("result.artifact", { count: idx + 1 })}
                   </a>
                 </Button>
               ))}
@@ -65,7 +67,7 @@ export function ResultPanel() {
 
         <Button variant="default" size="lg" className="w-full" onClick={resetTask}>
           <PlusCircle className="mr-2 h-4 w-4" strokeWidth={1.5} />
-          新建任务
+          {t("result.newTask")}
         </Button>
       </div>
     )
@@ -77,13 +79,13 @@ export function ResultPanel() {
       <div className="space-y-4">
         <div className="flex items-center gap-2 text-red-400">
           <XCircle className="h-5 w-5" strokeWidth={1.5} />
-          <span className="text-lg font-semibold">任务失败</span>
+          <span className="text-lg font-semibold">{t("result.failed")}</span>
         </div>
 
         {error && (
           <div className="rounded-card border border-red-500/30 bg-red-500/10 p-4">
             <p className="text-xs leading-relaxed text-red-300">
-              <span className="font-semibold">错误信息：</span>
+              <span className="font-semibold">{t("result.error")}</span>
             </p>
             <pre className="mt-2 overflow-auto whitespace-pre-wrap font-mono text-xs text-red-300">
               {error}
@@ -94,12 +96,12 @@ export function ResultPanel() {
         {/* Partial artifacts */}
         {hasArtifacts && (
           <div className="space-y-2">
-            <h3 className="text-sm font-medium text-slate-200">部分制品下载</h3>
+            <h3 className="text-sm font-medium text-slate-200">{t("result.partialArtifacts")}</h3>
             <div className="flex flex-wrap gap-2">
               <Button variant="outline" size="sm" asChild>
                 <a href={artifactUrl} download>
                   <Download className="mr-1.5 h-4 w-4" strokeWidth={1.5} />
-                  下载制品 ({artifacts!.length} 个文件)
+                  {t("result.download", { count: artifacts!.length })}
                 </a>
               </Button>
             </div>
@@ -108,7 +110,7 @@ export function ResultPanel() {
 
         <Button variant="default" size="lg" className="w-full" onClick={resetTask}>
           <PlusCircle className="mr-2 h-4 w-4" strokeWidth={1.5} />
-          新建任务
+          {t("result.newTask")}
         </Button>
       </div>
     )
@@ -120,22 +122,22 @@ export function ResultPanel() {
       <div className="space-y-4">
         <div className="flex items-center gap-2 text-slate-400">
           <Ban className="h-5 w-5" strokeWidth={1.5} />
-          <span className="text-lg font-semibold">任务已取消</span>
+          <span className="text-lg font-semibold">{t("result.cancelled")}</span>
         </div>
 
         <p className="text-sm text-slate-400">
-          任务已取消执行。您可以查看下方日志了解执行进度。
+          {t("result.cancelled.desc")}
         </p>
 
         {/* Partial artifacts */}
         {hasArtifacts && (
           <div className="space-y-2">
-            <h3 className="text-sm font-medium text-slate-200">部分制品下载</h3>
+            <h3 className="text-sm font-medium text-slate-200">{t("result.partialArtifacts")}</h3>
             <div className="flex flex-wrap gap-2">
               <Button variant="outline" size="sm" asChild>
                 <a href={artifactUrl} download>
                   <Download className="mr-1.5 h-4 w-4" strokeWidth={1.5} />
-                  下载制品 ({artifacts!.length} 个文件)
+                  {t("result.download", { count: artifacts!.length })}
                 </a>
               </Button>
             </div>
@@ -144,7 +146,7 @@ export function ResultPanel() {
 
         <Button variant="default" size="lg" className="w-full" onClick={resetTask}>
           <PlusCircle className="mr-2 h-4 w-4" strokeWidth={1.5} />
-          新建任务
+          {t("result.newTask")}
         </Button>
       </div>
     )
@@ -154,7 +156,7 @@ export function ResultPanel() {
   return (
     <div className="flex items-center justify-center py-8 text-slate-400">
       <PlayCircle className="mr-2 h-5 w-5 animate-pulse" strokeWidth={1.5} />
-      <span>任务执行中...</span>
+      <span>{t("result.running")}</span>
     </div>
   )
 }

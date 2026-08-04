@@ -8,6 +8,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
+import { useI18n } from "@/i18n"
 import type { FormSubmitData } from "@/types"
 
 interface AdvancedSectionProps {
@@ -43,21 +44,22 @@ function SwitchRow({
 }
 
 export function AdvancedSection({ data, onChange }: AdvancedSectionProps) {
+  const { t } = useI18n()
   return (
     <Accordion type="single" collapsible>
       <AccordionItem value="advanced" className="border-b-0">
         <AccordionTrigger>
           <span className="flex items-center gap-2">
             <Settings className="h-4 w-4 text-slate-400" strokeWidth={1.5} />
-            高级选项
+            {t("advanced.title")}
           </span>
         </AccordionTrigger>
         <AccordionContent className="space-y-5">
           {/* Research */}
           <SwitchRow
             icon={Search}
-            label="启用剧情研究"
-            description="使用 LLM 研究电影剧情以提升文案质量"
+            label={t("advanced.research")}
+            description={t("advanced.research.desc")}
             checked={data.research}
             onCheckedChange={(v) => onChange("research", v)}
           />
@@ -65,8 +67,8 @@ export function AdvancedSection({ data, onChange }: AdvancedSectionProps) {
           {/* Strict mode */}
           <SwitchRow
             icon={ShieldAlert}
-            label="严格模式"
-            description="软步骤失败时中止流水线"
+            label={t("advanced.strict")}
+            description={t("advanced.strict.desc")}
             checked={data.strict}
             onCheckedChange={(v) => onChange("strict", v)}
           />
@@ -74,8 +76,8 @@ export function AdvancedSection({ data, onChange }: AdvancedSectionProps) {
           {/* No clips */}
           <SwitchRow
             icon={Scissors}
-            label="跳过片段匹配"
-            description="不进行视频片段匹配和导出"
+            label={t("advanced.noClips")}
+            description={t("advanced.noClips.desc")}
             checked={data.no_clips}
             onCheckedChange={(v) => onChange("no_clips", v)}
           />
@@ -83,7 +85,7 @@ export function AdvancedSection({ data, onChange }: AdvancedSectionProps) {
           {/* Numeric params */}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label>场景检测阈值</Label>
+              <Label>{t("advanced.sceneThreshold")}</Label>
               <Input
                 type="number"
                 value={data.scene_threshold ?? ""}
@@ -94,7 +96,7 @@ export function AdvancedSection({ data, onChange }: AdvancedSectionProps) {
               />
             </div>
             <div className="space-y-2">
-              <Label>匹配最低分数</Label>
+              <Label>{t("advanced.matchMinScore")}</Label>
               <Input
                 type="number"
                 step="0.1"
@@ -110,19 +112,19 @@ export function AdvancedSection({ data, onChange }: AdvancedSectionProps) {
           <div className="space-y-2">
             <Label className="flex items-center gap-1.5 text-slate-200">
               <Languages className="h-4 w-4 text-pink-500" strokeWidth={1.5} />
-              翻译服务提供商
+              {t("advanced.translateProvider")}
             </Label>
             <Input
               value={data.translate_provider}
               onChange={(e) => onChange("translate_provider", e.target.value)}
-              placeholder="llm（留空使用默认）"
+              placeholder={t("advanced.translateProvider.placeholder")}
             />
           </div>
 
           <div className="space-y-2">
             <Label className="flex items-center gap-1.5 text-slate-200">
               <Repeat className="h-4 w-4 text-pink-500" strokeWidth={1.5} />
-              翻译重试次数
+              {t("advanced.translateRetries")}
             </Label>
             <Input
               type="number"

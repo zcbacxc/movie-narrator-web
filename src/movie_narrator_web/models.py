@@ -33,6 +33,7 @@ class TaskCreateRequest(BaseModel):
     translate_provider: str = Field("")
     translate_retries: Optional[int] = Field(None, ge=0, le=10)
     narration_preset: str = Field("", description="Narration style preset")
+    lang: str = Field("zh", pattern="^(zh|en)$", description="UI language for narration (zh|en)")
 
     def to_form_data(self, video_path: Optional[str] = None, bgm_path: Optional[str] = None):
         """Convert to FormData for validate_form() and form_to_context_args()."""
@@ -58,6 +59,7 @@ class TaskCreateRequest(BaseModel):
             translate_provider=self.translate_provider,
             translate_retries=self.translate_retries,
             narration_preset=self.narration_preset,
+            lang=self.lang,
         )
 
 

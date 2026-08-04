@@ -6,8 +6,10 @@ import { ProgressTimeline } from "@/components/ProgressTimeline"
 import { LogStream } from "@/components/LogStream"
 import { ResultPanel } from "@/components/ResultPanel"
 import { useTask } from "@/hooks/useTask"
+import { useI18n } from "@/i18n"
 
 export function MonitorPanel() {
+  const { t } = useI18n()
   const { taskId, status, currentStep, logText, connected, cancelTask } = useTask()
 
   const isRunning = status === "running"
@@ -19,7 +21,7 @@ export function MonitorPanel() {
         <CardHeader>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <CardTitle>任务监控</CardTitle>
+              <CardTitle>{t("monitor.title")}</CardTitle>
               {taskId && (
                 <span className="rounded-full border border-border bg-surface px-2 py-0.5 font-mono text-xs text-slate-400">
                   {taskId}
@@ -32,12 +34,12 @@ export function MonitorPanel() {
                 {connected ? (
                   <>
                     <Wifi className="h-3.5 w-3.5 text-green-400" strokeWidth={1.5} />
-                    <span className="text-green-400">已连接</span>
+                    <span className="text-green-400">{t("monitor.connected")}</span>
                   </>
                 ) : (
                   <>
                     <WifiOff className="h-3.5 w-3.5 text-slate-400" strokeWidth={1.5} />
-                    <span className="text-slate-400">未连接</span>
+                    <span className="text-slate-400">{t("monitor.disconnected")}</span>
                   </>
                 )}
               </div>
@@ -46,7 +48,7 @@ export function MonitorPanel() {
               {isRunning && (
                 <Button variant="destructive" size="sm" onClick={cancelTask}>
                   <X className="mr-1.5 h-4 w-4" strokeWidth={1.5} />
-                  取消任务
+                  {t("monitor.cancel")}
                 </Button>
               )}
             </div>

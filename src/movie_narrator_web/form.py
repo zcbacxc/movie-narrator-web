@@ -39,6 +39,9 @@ class FormData:
     translate_provider: str
     translate_retries: Optional[int]
     narration_preset: str = ""
+    # i18n: UI language for the generated narration (zh | en).
+    # Requires contract >= (0, 9, 5); defaults to zh for older contracts.
+    lang: str = "zh"
 
 
 def _valid_presets() -> set:
@@ -74,6 +77,8 @@ def validate_form(data: FormData) -> List[str]:
         errors.append("Match min score must be 0-1")
     if data.translate_retries is not None and not (0 <= data.translate_retries <= 10):
         errors.append("Translate retries must be 0-10")
+    if data.lang not in ("zh", "en"):
+        errors.append("Language must be zh or en")
     return errors
 
 
@@ -119,4 +124,8 @@ def form_to_context_args(data: FormData) -> Dict[str, Any]:
         subtitle_lang=data.subtitle_lang.strip() or None,
         subtitle_mode=data.subtitle_mode,
         narration_preset=data.narration_preset.strip() or None,
+        # i18n: pass the UI language downstream. ``build_context`` accepts
+        # ``lang`` (CONTRACT_VERSION >= (0, 9, 5)); older contracts fall back
+        # to the engine default (zh) since we leave the key present.
+        lang=data.lang,
     )

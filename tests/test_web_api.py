@@ -48,6 +48,7 @@ def _base_form(**overrides) -> FormData:
         match_min_score=None,
         translate_provider="",
         translate_retries=None,
+        lang="zh",
     )
     defaults.update(overrides)
     return FormData(**defaults)
@@ -262,6 +263,7 @@ def test_task_create_request_defaults():
     assert req.match_min_score is None
     assert req.translate_provider == ""
     assert req.translate_retries is None
+    assert req.lang == "zh"
 
 
 def test_task_create_request_to_form_data():
@@ -283,6 +285,7 @@ def test_task_create_request_to_form_data():
         match_min_score=0.3,
         translate_provider="llm",
         translate_retries=3,
+        lang="en",
     )
     fd = req.to_form_data(video_path="/v.mp4", bgm_path="/b.mp3")
     assert isinstance(fd, FormData)
@@ -304,6 +307,7 @@ def test_task_create_request_to_form_data():
     assert fd.match_min_score == 0.3
     assert fd.translate_provider == "llm"
     assert fd.translate_retries == 3
+    assert fd.lang == "en"
 
 
 def test_task_create_request_validation():

@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.4] — 2026-08-04
+
+### Added
+
+- **Web UI bilingual i18n (zh/en)**: the React frontend now ships a lightweight
+  i18n mechanism (React Context + typed message dictionaries, no extra
+  dependencies). All component strings — including Header, CreatePanel,
+  MovieSection, VoiceSection, SubtitlesSection, AdvancedSection, AssetsSection,
+  PresetSection, ResultPanel, MonitorPanel, LogStream, ProgressTimeline, and
+  Footer — were moved to dictionary references.
+- **Language switcher** in the Header (EN / 中文). The default follows the
+  browser language (falling back to Chinese), and the user's choice is
+  persisted in `localStorage`.
+- **Backend `lang` parameter** (`zh` | `en`) natively supported in
+  `form.py`, `models.py`, and `routes.py`. It is validated (`zh`/`en`) and
+  passed downstream to `build_context` via `form_to_context_args`, so the
+  pipeline can produce narration in the selected language.
+- **Frontend sends `lang`** with the task request, derived from the active UI
+  language.
+
+### Notes
+
+- i18n-related contract features require `CONTRACT_VERSION >= (0, 9, 5)`.
+  `build_context` already accepts `lang`; the web package passes it through
+  without lowering the existing minimum contract (`(0, 5, 0)`), preserving
+  backwards compatibility with older core engines.
+- No existing functionality changed — this is purely additive.
+
 ## [1.0.3] — 2026-07-30
 
 ### Changed

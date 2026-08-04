@@ -10,6 +10,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { cn } from "@/lib/utils"
+import { useI18n } from "@/i18n"
 import type { FormSubmitData } from "@/types"
 
 interface AssetsSectionProps {
@@ -87,25 +88,26 @@ export function AssetsSection({
   onVideoChange,
   onBgmChange,
 }: AssetsSectionProps) {
+  const { t } = useI18n()
   return (
     <Accordion type="single" collapsible defaultValue="assets">
       <AccordionItem value="assets" className="border-b-0">
-        <AccordionTrigger>素材资源</AccordionTrigger>
+        <AccordionTrigger>{t("assets.title")}</AccordionTrigger>
         <AccordionContent className="space-y-5">
           {/* Video upload */}
           <div className="space-y-2">
             <Label className="flex items-center gap-1.5 text-slate-200">
               <FolderOpen className="h-4 w-4 text-pink-500" strokeWidth={1.5} />
-              视频文件（可选）
+              {t("assets.video")}
             </Label>
             <FileDrop
               file={videoFile}
               accept="video/*"
-              placeholder="拖拽或点击上传视频文件"
+              placeholder={t("assets.video.placeholder")}
               onFileChange={onVideoChange}
             />
             <p className="text-xs text-slate-400">
-              上传本地视频文件，或留空使用电影名称自动解析
+              {t("assets.video.hint")}
             </p>
           </div>
 
@@ -113,12 +115,12 @@ export function AssetsSection({
           <div className="space-y-2">
             <Label className="flex items-center gap-1.5 text-slate-200">
               <FolderOpen className="h-4 w-4 text-pink-500" strokeWidth={1.5} />
-              素材库目录（可选）
+              {t("assets.libraryDir")}
             </Label>
             <Input
               value={data.library_dir}
               onChange={(e) => onChange("library_dir", e.target.value)}
-              placeholder="视频素材库路径，用于模糊匹配片段"
+              placeholder={t("assets.libraryDir.placeholder")}
             />
           </div>
 
@@ -126,12 +128,12 @@ export function AssetsSection({
           <div className="space-y-2">
             <Label className="flex items-center gap-1.5 text-slate-200">
               <Music className="h-4 w-4 text-pink-500" strokeWidth={1.5} />
-              背景音乐文件（可选）
+              {t("assets.bgm")}
             </Label>
             <FileDrop
               file={bgmFile}
               accept="audio/*"
-              placeholder="拖拽或点击上传背景音乐"
+              placeholder={t("assets.bgm.placeholder")}
               onFileChange={onBgmChange}
             />
           </div>
@@ -141,8 +143,8 @@ export function AssetsSection({
             <div className="flex items-center gap-2">
               <Music2 className="h-4 w-4 text-slate-400" strokeWidth={1.5} />
               <div>
-                <Label className="cursor-pointer">禁用背景音乐</Label>
-                <p className="text-xs text-slate-400">不添加 BGM 到最终视频</p>
+                <Label className="cursor-pointer">{t("assets.noBgm")}</Label>
+                <p className="text-xs text-slate-400">{t("assets.noBgm.desc")}</p>
               </div>
             </div>
             <Switch
