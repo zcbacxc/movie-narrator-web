@@ -5,12 +5,12 @@ import path from "path"
 export default defineConfig({
   plugins: [react()],
   resolve: {
-    alias: { "@": path.resolve(__dirname, "./src") },
+    alias: { "@": path.resolve(import.meta.dirname, "./src") },
   },
   build: {
     // Output to package static directory so FastAPI serves it in production
     // and pip install includes it as package data.
-    outDir: path.resolve(__dirname, "../src/movie_narrator_web/static"),
+    outDir: path.resolve(import.meta.dirname, "../src/movie_narrator_web/static"),
     emptyOutDir: true,
   },
   server: {
