@@ -16,6 +16,9 @@ build/
 .env
 .env.local
 
+# Output (pipeline artifacts produced by the core engine)
+output/
+
 # Node
 node_modules/
 webui/dist/
@@ -28,6 +31,10 @@ src/movie_narrator_web/static/
 .idea/
 *.swp
 .DS_Store
+
+# AI Tools
+.claude/
+CLAUDE.md
 
 # TypeScript build info
 webui/tsconfig.tsbuildinfo
