@@ -28,6 +28,14 @@ dependencies (FastAPI, uvicorn).
 - Python >= 3.10
 - ffmpeg (required by the core engine for audio/video processing)
 
+## Features
+
+- Bilingual Web UI (Chinese / English) with a header language switcher
+- REST API for task creation, status monitoring, and cancellation
+- Live WebSocket progress streaming as the pipeline runs
+- Artifact download and MP4 video streaming
+- Independent version line, compatible with the core engine via `CONTRACT_VERSION`
+
 ## Usage
 
 ```bash
@@ -42,11 +50,7 @@ mn-web --reload
 
 ### CLI Options
 
-| Option | Default | Description |
-|--------|---------|-------------|
-| `--host` | `127.0.0.1` | Bind address |
-| `--port` | `8760` | Port to listen on |
-| `--reload` | off | Enable auto-reload (development mode) |
+Run `mn-web --help` for the full list of options (`--host`, `--port`, `--reload`, ...).
 
 Or programmatically:
 
@@ -85,6 +89,11 @@ contract layer (`movie_narrator.contract`). No internal module imports.
 
 ## Documentation
 
+- [Architecture](ARCHITECTURE.md)
+- [Architecture Decision Records](ADR.md)
+- [Roadmap](ROADMAP.md)
+- [Stability Promise](STABILITY.md)
+- [Release Checklist](RELEASE_CHECKLIST.md)
 - [Changelog](CHANGELOG.md)
 - [Contributing](CONTRIBUTING.md)
 

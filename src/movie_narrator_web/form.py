@@ -110,7 +110,10 @@ def form_to_context_args(data: FormData) -> Dict[str, Any]:
         style=data.style,
         duration=data.duration,
         voice=data.voice.strip() or None,
-        format=data.format,
+        # Core engine v1.0 renamed the ``build_context`` param ``format`` →
+        # ``video_format`` (breaking change). The web API keeps ``format`` as
+        # its own HTTP field name (frontend compatibility); we map it here.
+        video_format=data.format,
         video=data.video_path,
         library_dir=data.library_dir.strip() or None,
         research=data.research,

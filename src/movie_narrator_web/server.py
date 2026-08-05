@@ -11,7 +11,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from movie_narrator import __version__
+from . import __version__
 
 from .routes import create_router
 from .tasks import TaskManager

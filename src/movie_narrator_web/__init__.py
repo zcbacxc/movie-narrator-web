@@ -5,7 +5,7 @@
 
 from __future__ import annotations
 
-__version__ = "1.0.4"
+__version__ = "1.1.0"
 
 # ── Contract version check ─────────────────────────────────
 # Fail fast if the installed core engine doesn't meet the
@@ -14,9 +14,14 @@ __version__ = "1.0.4"
 # NOTE: This checks the *contract* version (API compatibility),
 # not the package version. movie-narrator-web uses an independent
 # version line from the core engine — see README for details.
+#
+# Aligned to core engine v1.0: we rely on the ``build_context``
+# ``video_format`` parameter (renamed from ``format`` in v1.0) and the
+# i18n/preset/subtitle surface that stabilized in 1.x. Requiring
+# contract >= 1.0.0 guarantees the web package runs against a 1.x engine.
 from movie_narrator.contract import check_version
 
-_MIN_CONTRACT = (0, 5, 0)
+_MIN_CONTRACT = (1, 0, 0)
 check_version(_MIN_CONTRACT)
 
 __all__ = ["launch_web_api", "main"]
